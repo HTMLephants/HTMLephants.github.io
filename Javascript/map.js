@@ -40,3 +40,17 @@ L.tileLayer(
 
         var voronoiPolygons = turf.voronoi(points, options);
         L.geoJson(voronoiPolygons, {color: "red", fillColor: '#0000FF'}).addTo(map);
+
+        var centerPoint = turf.center(points);
+
+        L.geoJson(centerPoint, {color: "blue"}).addTo(map);
+
+
+            var marker = L.marker ([29.8884, -97.9384]).addTo(map);
+              var center = turf.point([-97.9384, 29.8884]);
+              var radius = 20;
+              var bearing1 = 0;
+              var bearing2 = 80;
+              var sector = turf.sector(center, radius, bearing1, bearing2);
+
+        L.geoJson(sector, {color: "red", fillColor: '#0000FF'}).addTo(map);
