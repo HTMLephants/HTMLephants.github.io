@@ -12,4 +12,4 @@
 
 ### "Normalized Burn Ratio severity map of Llano CR308 Fire"
 
-### "Some sort of webmap that employs planet basemaps and task specific"
+### "Some sort of webmap that employs planet basemaps and task specific(needs to use ArcGIS)"
