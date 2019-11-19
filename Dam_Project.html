@@ -1,0 +1,76 @@
+Hello World, Max edited this page.
+Hello World, Jeremy edited this page.
+Hello World, Corban edited this page.
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Full Screen Leaflet Map</title>
+    <meta charset="utf-8" />
+    <!-- map_style.css must supersede leaflet stylesheet /-->
+    <link rel="stylesheet" type="text/css" href="css/map_style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+      intergrity= "sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""/>
+      <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        intergrity= "sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin="">
+      </script>
+      <!-- Turf source below -->
+      <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+
+
+
+</head>
+<body>
+    <div id="map"></div>
+
+    <!--<script src="https://d19vzq90twjlae.cloudfront.net/leaflet-0.7/leaflet.js">
+    </script>-->
+
+    <!-- the external link to JS -->
+    <script src="Javascript/map.js"></script>
+
+    <script>
+        map();
+    </script>
+
+    <script>
+
+
+    var points = turf.featureCollection([
+
+
+        turf.point( [-98.56546735391021,30.649278787896037]),
+        turf.point( [-98.56899152509868,30.64577842131257]),
+        turf.point( [-98.56589701026678,30.64970651641488]),
+        turf.point( [-98.56591201387346,30.648694401606917]),
+        turf.point( [-98.56765662319958,30.64182593487203]),
+        turf.point( [-98.56627729721367,30.64167480915785]),
+        turf.point( [-98.56781009584665,30.644342601299286]),
+        turf.point( [-98.56902262195945,30.64480603672564]),
+        turf.point( [-98.57225879095495,30.645415568724275]),
+        turf.point( [-98.57169711962342,30.64489438198507]),
+        turf.point( [-98.57101868838072,30.647981939837337]),
+        turf.point( [-98.56515454128385,30.64842131920159]),
+        turf.point( [-98.57034151442349,30.64712069928646]),
+        turf.point( [-98.56380706652999,30.64490812830627]),
+        turf.point( [-98.5676622390747,30.648796912282705]),
+        turf.point( [-98.56670200824738,30.648750560358167]),
+        turf.point( [-98.56937508098781,30.648176316171885]),
+        turf.point( [-98.56811829842627,30.6482704449445]),
+        turf.point( [-98.56736795045435,30.64799878746271]),
+        turf.point( [-98.56642850674689,30.648024855181575]),
+        turf.point( [-98.56804260984063,30.645200740545988])
+
+        ]);
+
+        var centerPoint = turf.center(points);
+
+        L.geoJson(centerPoint, {color: "blue"}).addTo(map);
+//Not yet functional vvv
+//        centerPoint.bindPopup("<b>Center Point.</b>").openPopup();
+        </script>
+
+</body>
+</html>
