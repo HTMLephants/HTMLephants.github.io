@@ -3,9 +3,11 @@ body {
     margin: 0;
 }
 
-html, body, #map {
-    height: 100%;
-    width: 100%;
+#map {
+    height: 75%;
+    width: 75%;
+    float: right;
+    padding-right: 100px;
 }
 
 #header {
@@ -16,7 +18,7 @@ html, body, #map {
 
 #sidebar {
   background-color: #b3b3cc;
-  align-self: left;
-  position: relative;
+  float: left;
   width: 150px;
+  height: 100%;
 }
