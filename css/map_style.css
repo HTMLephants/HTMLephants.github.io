@@ -7,3 +7,16 @@ html, body, #map {
     height: 100%;
     width: 100%;
 }
+
+#header {
+  background-color: #336699;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#sidebar {
+  background-color: #b3b3cc;
+  align-self: left;
+  position: relative;
+  width: 150px;
+}
