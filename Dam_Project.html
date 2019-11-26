@@ -1,7 +1,3 @@
-Hello World, Max edited this page.
-Hello World, Jeremy edited this page.
-Hello World, Corban edited this page.
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +8,7 @@ Hello World, Corban edited this page.
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
       intergrity= "sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
       crossorigin=""/>
+      <script src="javascript/Dams_project.js"></script>
       <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
         intergrity= "sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
         crossorigin="">
@@ -20,23 +17,21 @@ Hello World, Corban edited this page.
       <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
 
 
-
 </head>
-<body>
+  <body>
     <div id="header">
       <h1> The Aging Dams of Central Texas </h1>
     </div>
     <div style="width: 100%; overflow: hidden;">
       <div id="sidebar">
         Sidebar test.
-        <div class="dropdown">
+        <!--<div class="dropdown">
           <button onclick="myFunction()" class="dropbtn">Addational Information</button>
           <div id="myDropdown" class="dropdown-content">
             <a href="https://www.census.gov/">Census</a>
-          </div>
-          </div>
+          </div>-->
+        </div>
       </div>
-
       <div id="map" style="padding-right: 100px;"></div>
     </div>
     <!--<script src="https://d19vzq90twjlae.cloudfront.net/leaflet-0.7/leaflet.js">
@@ -45,9 +40,6 @@ Hello World, Corban edited this page.
     <!-- the external link to JS -->
     <script src="Javascript/map.js"></script>
 
-    <script>
-        map();
-    </script>
 
     <script>
 
@@ -90,5 +82,11 @@ Hello World, Corban edited this page.
           <input type="range" min="1900" max="2019" value="1" class="slider" id="myRange">
         </div>
 
-</body>
+        <div id="copyright">
+          <script>
+            var today = new Date(11/25);
+            var year = today.getFullYear(2019);
+            </script>
+
+  </body>
 </html>
