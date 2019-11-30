@@ -3,7 +3,7 @@ body {
     margin: 0;
 }
 
-#map {
+#viewDiv {
     height: 75%;
     width: 75%;
     float: left;
