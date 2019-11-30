@@ -1,0 +1,120 @@
+Hello World, Max edited this page.
+Hello World, Jeremy edited this page.
+Hello World, Corban edited this page.
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Aging Dams of Central Texas</title>
+    <meta charset="utf-8" />
+    <!-- map_style.css must supersede leaflet stylesheet /-->
+    <link rel="stylesheet" type="text/css" href="css/map_style.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+    <script src="https://js.arcgis.com/4.13/"></script>
+
+
+
+      <script>
+
+        require([
+          "esri/Map",
+          "esri/views/MapView",
+          "esri/layers/TileLayer",
+          "esri/layers/MapImageLayer",
+          "esri/widgets/Slider"
+        ],
+        function(Map,MapView,TileLayer, MapImageLayer, Slider){
+
+          var TransportationLayer = new TileLayer({
+            url: "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/Mapserver"
+          });
+
+          var CitiesRenderer = {
+            type: "simple", //autocasts as new SimpleRenderer()
+            symbol: {
+              type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+              size: 3,
+              color: "yellow",
+              style: "circle",
+              outline: {
+                width:1,
+                color: "yellow"
+                }
+              },
+              label: "Cities"
+          };
+    //Assigns a new layer variable referencing the arcgis servers to generate cities on the map.
+          var CitiesLayer = new MapImageLayer({
+            url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/Mapserver",
+            sublayers: [
+              {
+                id: 0,
+                renderer: CitiesRenderer,
+                opacity: 0.4
+              }
+            ]
+          });
+    //Assigns map variable and makes basemap the dark-gray preset from ESRI
+          var map = new Map({
+          basemap: "dark-gray",
+          layers: [TransportationLayer]
+          });
+
+          var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 9,
+          center: [-97.9414, 29.8833]
+          });
+
+          const slider = new Slider({
+            container: "sliderDiv",
+            min: 1900,
+            max: 2019,
+            values: [ 50 ],
+            snapOnClickEnabled: false,
+            labelsVisible: true,
+            rangeLabelsVisible: true,
+          });
+
+          view.ui.add(slider, {
+            position: "top-right"
+          });
+
+        });
+
+      </script>
+
+
+
+</head>
+<body>
+    <div id="header">
+      <h1> The Aging Dams of Central Texas </h1>
+    </div>
+    <div style="width: 100%; overflow: hidden;">
+      <div id="sidebar">
+        Sidebar test.
+        <div class="dropdown">
+          <button onclick="myFunction()" class="dropbtn">Addational Information</button>
+          <div id="myDropdown" class="dropdown-content">
+            <a href="https://www.census.gov/">Census</a>
+          </div>
+          </div>
+      </div>
+      <div id="viewDiv"></div>
+
+    </div>
+
+
+    <!-- the external link to JS -->
+    <script src="Javascript/map.js"></script>
+
+
+
+        <div class="slidecontainer">
+          <input type="range" min="1900" max="2019" value="1" class="slider" id="myRange">
+        </div>
+
+</body>
+</html>
