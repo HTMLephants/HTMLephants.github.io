@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Spatial Analysis of Dam Failure of Central Texas</title>
+  <style>
+    html, body, #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+    #optionsDiv {
+      background-color: dimgray;
+      color: white;
+      padding: 10px;
+      width: 350px;
+    }
+    .esri-popup .esri-popup-header .esri-title {
+      font-size: 18px;
+      font-weight: bolder;
+    }
+    .esri-popup .esri-popup-body .esri-popup-content {
+      font-size: 14px;
+    }
+    footer {
+      z-index: 5;
+      background-color: dimgray;
+    }
+  </style>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.13/"></script>
+  <script>
+
+
+    //initiates the esri map and mapview
+      require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/widgets/LayerList",
+      "esri/layers/TileLayer",
+      "esri/layers/FeatureLayer",
+      "esri/widgets/BasemapGallery",
+      "esri/layers/GraphicsLayer",
+      "esri/tasks/QueryTask",
+      "esri/tasks/support/Query",
+      "dojo/_base/array",
+      "dojo/dom",
+      "dojo/on",
+      "dojo/domReady!"
+      ],
+      function(Map, MapView, LayerList, TileLayer, FeatureLayer, BasemapGallery, GraphicsLayer, QueryTask, Query, arrayUtils, dom, on){
+
+        // declares the feature service for public schools in central texas
+        var schools_Layer = "https://services5.arcgis.com/MzUccRb9b4fP5nf0/ArcGIS/rest/services/schools_spatial/FeatureServer";
+
+        /*****************************************************************
+         *  Point QueryTask to URL of feature service
+         *****************************************************************/
+        var qTask = new QueryTask({
+          url: schools_Layer
+        });
+
+
+        // pulls in the tile layer for floodplain_tiles and sets opactiy to 1
+        var floodplain_tilesLayer = new TileLayer({
+          url: "https://tiles.arcgis.com/tiles/MzUccRb9b4fP5nf0/arcgis/rest/services/floodplain2_spatial/MapServer",
+          opacity: 1
+        });
+
+
+
+
+
+        //declares the basemap, floodplain, and schools layer
+        var map = new Map({
+          basemap: "dark-gray",
+          layers: [ floodplain_tilesLayer, schools_Layer ]
+        });
+
+        //declares the map view over the great basin and zoom level 6
+        var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 9,
+          center: [-97.7, 30.1]
+        });
+
+        // adds the query window
+        view.when(function() {
+          view.ui.add("optionsDiv", "bottom-right");
+          on(dom.byId("doBtn"), "click", doQuery);
+        });
+
+        var attributeName = dom.byId("attSelect");
+        var expressionSign = dom.byId("signSelect");
+        var value = dom.byId("valSelect");
+
+        //defines the query attributes
+        function doQuery() {
+          resultsLayer.removeAll();
+          params.where = attributeName.value + expressionSign.value + value.value;
+          qTask.execute(params)
+          .then(getResults)
+          .catch(promiseRejected);
+        }
+        //adds the results to the map in dialog
+        function getResults(response) {
+
+          var fireResults = arrayUtils.map(response.features, function(
+            feature) {
+              feature.popupTemplate = popupTemplate;
+              return feature;
+            });
+
+            resultsLayer.addMany(fireResults);
+            view.goTo(fireResults).then(function() {
+              view.popup.open({
+                features: fireResults,
+                featureMenuOpen: true,
+                updateLocationEnabled: true
+              });
+            });
+
+            dom.byId("printResults").innerHTML = fireResults.length +
+            " results found!";
+
+        }
+        function promiseRejected(error) {
+          console.error("Promise rejected: ", error.message);
+        }
+
+
+        // adds the basemap gallery
+        var basemapGallery = new BasemapGallery({
+          view: view
+        });
+        // positions it to the top right
+        view.ui.add(basemapGallery, {
+          position: "top-right"
+        });
+
+        // layer list widget, can toggle layers on/off
+        var layerList = new LayerList({
+          view: view
+        });
+        // Adds widget below other elements in the top left corner of the view
+        view.ui.add(layerList, {
+          position: "bottom-left"
+        });
+
+        // fire attribute data service to pull the attributes from
+        var fireUrl =
+        "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Historical_Wildfire_Boundaries_1870_2015_in_Great_Basin/FeatureServer/0";
+        // attributes to display in popups
+        var popupTemplate = {
+          title: "{Fire_Name}",
+          fieldInfos: [{
+            fieldName: "Fire_Year",
+            label: "Fire Year",
+            format: {
+              places: 0,
+              digitSeperator: false
+            }
+          }, {
+            fieldName: "Hectares_B",
+            label: "Hectares",
+            format:{
+              places: 0,
+              digitSeperator: true
+            }
+          }],
+          content:
+            "<b>Fire Year:" + "</b> {Fire_Year}" +
+            "<br><b>Hectares:</b> {Hectares_B}"
+            // does not exist in feature service"<br><b>Latitude:</b> {Latitude}" +
+            //"<br><b>Longitude:</b> {Longitude}"
+        };
+
+        var resultsLayer = new GraphicsLayer();
+        //where to pull the attribute data from
+        var qTask = new QueryTask({
+          url: fireUrl
+        });
+
+        var params = new Query({
+          returnGeometry: true,
+          outFields: ["*"]
+        });
+
+      });
+      </script>
+
+</head>
+
+
+
+<body>
+  <div id="viewDiv"></div>
+    <!-- adds the query dialog-->
+    <div class="esri-widget" id="optionsDiv">
+    <h2>Fires in the Great Basin</h2>
+    <select class="esri-widget" id="attSelect">
+      <option value="Fire_Year">Fire Year</option>
+      <option value="Hectares_B" selected>Hectares</option>
+    </select>
+    <select class="esri-widget" id="signSelect">
+      <option value=">">is greater than</option>
+      <option value="<">is less than</option>
+    </select>
+    <select class="esri-widget" id="valSelect">
+      <option value="10000">10,000</option>
+      <option value="50000">50,000</option>
+      <option value="100000">100,000</option>
+      <option value="150000">150,000</option>
+      <option value="200000">200,000</option>
+      <option value="1910">Year 1910</option>
+      <option value="1925">Year 1925</option>
+      <option value="1950">Year 1950</option>
+      <option value="1975">Year 1975</option>
+      <option value="2000">Year 2000</option>
+    </select>
+    <br>
+    <br>
+    <button class="esri-widget" id="doBtn">Do Query</button>
+    <br>
+    <p><span id="printResults"></span></p>
+  </div>
+
+  <footer>
+    <div id="copyright">
+      <script>
+      // new Date() creates a new date object with the current date and time
+      var today = new Date();
+      // Get the year as a four digit number (yyyy)
+      var year = today.getFullYear();
+      // Writes the date from the vars above to a new line and ammends Copyright,
+      // symbol and my name to the date.
+      document.writeln("Copyright &copy; " + year);
+      document.write(" by Max Petri")
+      </script>
+    </div>
+
+    <!--© 2019 by Max Petri-->
+  </footer>
+</body>
+
+</html>
