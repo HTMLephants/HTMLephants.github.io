@@ -8,6 +8,7 @@ body {
     height: 75%;
     width: 75%;
     float: left;
+    z-index: 100;
 }
 
 #header {

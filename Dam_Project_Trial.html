@@ -64,7 +64,7 @@
           center: [-97.9414, 29.8833]
           });
 
-          var slider = new Slider({
+          const slider = new Slider({
             container: "sliderDiv",
             min: 1900,
             max: 2019,
@@ -77,6 +77,7 @@
               }],
             steps: 1,
             snapOnClickEnabled: false,
+            labelsVisible: true,
             rangeLabelsVisible: true,
           });
 
@@ -106,10 +107,10 @@
           </div>
       </div>
       <div id="viewDiv"></div>
-
+      <div id="sliderDiv"></div>
 
     </div>
-    <div id="sliderDiv"></div>
+
 
     <!-- the external link to JS -->
     <script src="Javascript/map.js"></script>
