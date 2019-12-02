@@ -21,17 +21,24 @@ Hello World, Corban edited this page.
           "esri/views/MapView",
           "esri/layers/TileLayer",
           "esri/layers/MapImageLayer",
+          "esri/layers/FeatureLayer",
           "esri/widgets/Slider",
+          "esri/widgets/BasemapGallery",
           "dojo/_base/array",
           "dojo/dom",
           "dojo/on",
           "dojo/domReady!"
         ],
-        function(Map,MapView,TileLayer, MapImageLayer, Slider){
+        function(Map,MapView,TileLayer, MapImageLayer, FeatureLayer, Slider, BasemapGallery){
 
-          var TransportationLayer = new TileLayer({
-            url: "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/Mapserver"
+
+          var damsLayer = new FeatureLayer({
+            url: "https://services5.arcgis.com/ht4xycgBWFPEty9E/ArcGIS/rest/services/Counties_Dams/FeatureServer/0"
           });
+
+          var countyLines = new FeatureLayer({
+            url: "https://services5.arcgis.com/ht4xycgBWFPEty9E/ArcGIS/rest/services/Counties_Dams/FeatureServer/1"
+          })
 
           var CitiesRenderer = {
             type: "simple", //autocasts as new SimpleRenderer()
@@ -60,8 +67,8 @@ Hello World, Corban edited this page.
           });
     //Assigns map variable and makes basemap the dark-gray preset from ESRI
           var map = new Map({
-          basemap: "dark-gray",
-          layers: [TransportationLayer]
+          basemap: "oceans",
+          layers: [damsLayer, countyLines]
           });
 
           var view = new MapView({
@@ -91,7 +98,13 @@ Hello World, Corban edited this page.
           view.ui.add(slider, {
             position: "bottom"
           });
-
+          var basemapGallery = new BasemapGallery({
+            view: view
+          });
+          // positions it to the top right
+          view.ui.add(basemapGallery, {
+            position: "top-right"
+          });
         });
 
       </script>
@@ -100,33 +113,49 @@ Hello World, Corban edited this page.
 
 </head>
 <body>
+  <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
     <div id="header">
-      <h1> The Aging Dams of Central Texas </h1>
+      <h1> The Aging Dams of Central Texas </h1> <h5> By the HTMLephants</h5>
     </div>
     <div style="width: 100%; overflow: hidden;">
       <div id="sidebar">
-        <p>Sidebar test.</p>
-        <p><a href="HTMLephants.github.io/Dam_Fail_Spatial_Works.html">Dam Fail Spatial Works</a></p>
-        <div class="dropdown">
-          <button onclick="myFunction()" class="dropbtn">Addational Information</button>
-          <div id="myDropdown" class="dropdown-content">
-            <a href="https://www.census.gov/">Census</a>
-          </div>
-          </div>
+        <p><a href="https://www.HTMLephants.github.io/Dam_Fail_Spatial_Works.html">Dam Fail Spatial Works</a></p>
+        <p><a href="#about">About Dam Failure</a></p>
+        <p><a href="#groupMembers">About the Developers</a></p>
+
       </div>
       <div id="viewDiv"></div>
       <div id="sliderDiv"></div>
     </div>
+    <div id="about" style="padding-left: 20%; width: 55%">
+      <h2><u>About Dam Failure</u></h2>
+      <p>    <emsp>Dams across Texas are aging and not receiving the maintenance or
+        long-term services needed to stay up to date. Some dams, like the one
+        on Lake Dunlap was allowed to fail May 14, 2019 following heavy spring
+        rain fall. Central Texas has been infamously nick-named the “Flashflood
+        Alley” of North America, with its ability to have torrential rain fall
+        and presence of hardpacked soils or impervious surfaces, which create a flood
+        hazard in many places (LCRA). Research needs to be done on these
+        dams, especially the older ones and dams in critical hazard
+        situations. The purpose of this project is to develop a tool displaying
+        age of Central Texas dams, observing their implementation or
+        renovation, and any failure events.  </p>
 
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/ztXVshOW61o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div id="groupMembers" style="padding-left: 20%; padding-top: 100px; width: 55%">
+        <h2><u>About the Developers</u></h2>
+        <p>Below you'll find a link to the personal sites of the developers of this webpage:</p>
+        <a href="https://cwr98.github.io/">Corban</a>
+        <a href="https://jqmed.github.io/">Jeremy</a>
+        <a href="https://maxpetri88.github.io/">Max</a>
+        </div>
 
     <!-- the external link to JS -->
     <script src="Javascript/map.js"></script>
 
 
 
-        <div class="slidecontainer">
-          <input type="range" min="1900" max="2019" value="1" class="slider" id="myRange">
-        </div>
 
 </body>
 </html>
