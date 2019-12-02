@@ -31,11 +31,14 @@
   </style>
   <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
   <script src="https://js.arcgis.com/4.13/"></script>
-<script> window.alert('Please be advised the risk information displayed on this site is for training purposes only, any information does not mean there is real danger or hazard. Thank you for understanding.');</script>
+
+<script>
+// entry splash window to acknowledge training purposes of map
+window.alert('Please be advised the risk information displayed on this site is for training purposes only, any information does not mean there is real danger or hazard. Thank you for understanding.');
+</script>
 
   <script>
 
-//need entry splash window to acknowledge training purposes of map
 
     //initiates the esri map and mapview
       require([
@@ -86,7 +89,7 @@
 
         var map = new Map({
           basemap: "dark-gray",
-          layers: [resultsLayer, floodplain_tilesLayer] // add graphics layer to the map
+          layers: [resultsLayer] // add graphics layer to the map
         });
 
         //declares the map view over the central texas and zoom level 9
@@ -100,7 +103,7 @@
 
         // pulls in the tile layer for floodplain_tiles and sets opactiy to 1
         var floodplain_tilesLayer = new TileLayer({
-          url: "https://tiles.arcgis.com/tiles/MzUccRb9b4fP5nf0/arcgis/rest/services/floodplain2_spatial/MapServer",
+          url: "https://tiles.arcgis.com/tiles/MzUccRb9b4fP5nf0/arcgis/rest/services/floodplain2_spatial/MapServer/0",
           opacity: 1
         });
 
