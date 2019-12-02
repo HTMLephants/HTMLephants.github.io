@@ -52,32 +52,26 @@
       ],
       function(Map, MapView, LayerList, TileLayer, FeatureLayer, BasemapGallery, GraphicsLayer, QueryTask, Query, arrayUtils, dom, on){
 
+        // declares the feature service for public schools in central texas
+        var schools_Layer = "https://services5.arcgis.com/MzUccRb9b4fP5nf0/ArcGIS/rest/services/schools_spatial/FeatureServer";
+
+        /*****************************************************************
+         *  Point QueryTask to URL of feature service
+         *****************************************************************/
+        var qTask = new QueryTask({
+          url: schools_Layer
+        });
+
+
         // pulls in the tile layer for floodplain_tiles and sets opactiy to 1
         var floodplain_tilesLayer = new TileLayer({
           url: "https://tiles.arcgis.com/tiles/MzUccRb9b4fP5nf0/arcgis/rest/services/floodplain2_spatial/MapServer",
           opacity: 1
         });
 
-        // declares the graphics to add to the schools_Layer
-        var schoolsRenderer = {
-        type:"simple", // ''line-3d', 'mesh-3d', 'point-3d', 'polygon-3d', 'web-style', 'cim'
-        symbol: {
-          color:[76,129,205,191],
-          outline:{color:[0,0,0,255],
-            width:0.75,
-            type:"esriSLS",
-            style:"esriSLSSolid"},
-          type:"esriSFS",
-          style:"esriSFSSolid"},
-        transparency:0,
-        label: "Fires"
-        };
 
-        // declares the feature server for schools_spatial
-        var schools_Layer = new FeatureLayer({
-          url: "https://services5.arcgis.com/MzUccRb9b4fP5nf0/ArcGIS/rest/services/schools_spatial/FeatureServer",
 
-        });
+
 
         //declares the basemap, floodplain, and schools layer
         var map = new Map({
