@@ -21,7 +21,11 @@ Hello World, Corban edited this page.
           "esri/views/MapView",
           "esri/layers/TileLayer",
           "esri/layers/MapImageLayer",
-          "esri/widgets/Slider"
+          "esri/widgets/Slider",
+          "dojo/_base/array",
+          "dojo/dom",
+          "dojo/on",
+          "dojo/domReady!"
         ],
         function(Map,MapView,TileLayer, MapImageLayer, Slider){
 
@@ -71,14 +75,21 @@ Hello World, Corban edited this page.
             container: "sliderDiv",
             min: 1900,
             max: 2019,
-            values: [ 50 ],
-            snapOnClickEnabled: false,
+            values: [ 1900 ],
+            precision: 1,
+            tickConfigs: [{
+              mode: "count",
+              values: 120,
+              labelsVisible: false
+            }],
+            steps: 1,
+            snapOnClickEnabled: true,
             labelsVisible: true,
             rangeLabelsVisible: true,
           });
 
           view.ui.add(slider, {
-            position: "top-right"
+            position: "bottom"
           });
 
         });
@@ -94,7 +105,8 @@ Hello World, Corban edited this page.
     </div>
     <div style="width: 100%; overflow: hidden;">
       <div id="sidebar">
-        Sidebar test.
+        <p>Sidebar test.</p>
+        <p><a href="HTMLephants.github.io/Dam_Fail_Spatial_Works.html">Dam Fail Spatial Works</a></p>
         <div class="dropdown">
           <button onclick="myFunction()" class="dropbtn">Addational Information</button>
           <div id="myDropdown" class="dropdown-content">
@@ -103,7 +115,7 @@ Hello World, Corban edited this page.
           </div>
       </div>
       <div id="viewDiv"></div>
-
+      <div id="sliderDiv"></div>
     </div>
 
 
