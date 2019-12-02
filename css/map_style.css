@@ -10,6 +10,13 @@ body {
     float: left;
 }
 
+#sliderDiv {
+    height: 55px;
+    width: 75%;
+    float: left;
+    padding-top: 25px;
+  }
+
 #header {
   background-color: #336699;
   padding-top: 15px;
